@@ -1,6 +1,8 @@
-html, body, #root {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #4f4d52; /* Replace with your desired background color */
-  }
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #4f4d52; /* Replace with your desired background color */
+}
