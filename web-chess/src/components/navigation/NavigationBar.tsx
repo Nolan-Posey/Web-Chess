@@ -1,16 +1,17 @@
 import { Navbar, Nav } from "react-bootstrap";
 import "./NavigationBar.css";
+import {NavLink} from "react-router-dom";
 
 function NavigationBar() {
   return (
     <Navbar className="navbar-custom"  expand="lg">
-      <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+      <Navbar.Brand as={NavLink} to="/Home">React-Bootstrap</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#chessboard">Chessboard</Nav.Link>
-          <Nav.Link href="#about_us">About Us</Nav.Link>
+          <Nav.Link as={NavLink} to="/Home">Home</Nav.Link>
+          <Nav.Link as={NavLink} to="/Chessboard">Chessboard</Nav.Link>
+          <Nav.Link as={NavLink} to="/AboutUs">About Us</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
