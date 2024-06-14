@@ -1,0 +1,13 @@
+.chessboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    width: 90vw; /* Full width of the viewport */
+    box-sizing: border-box;
+  }
+
+  .chessboard-wrapper {
+    display: grid;
+    place-items: center;
+  }
