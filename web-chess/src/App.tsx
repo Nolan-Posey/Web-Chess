@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { Chessboard } from "react-chessboard";
+import NavigationBar from "./components/navigation/NavigationBar";
 
 function App() {
-
   return (
     <>
       <div>
-        <Chessboard id='BasicBoard' boardWidth={900}/>
+        <NavigationBar />
       </div>
     </>
   );
