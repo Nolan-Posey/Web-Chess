@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Chess } from 'chess.js';
 import { Chessboard } from "react-chessboard";
 import "./ChessboardPage.css";
+import MoveList from '../components/chess_components/MoveList';
 
 function ChessboardPage() {
   const [game, setGame] = useState(new Chess());
@@ -32,14 +33,11 @@ function ChessboardPage() {
     <div className="chessboard-container">
       <div className="chessboard-wrapper">
         <Chessboard boardWidth={700} position={game.fen()} onPieceDrop={handlePieceDrop}></Chessboard>
+        <MoveList moves={history}></MoveList>
       </div>
+      <div className="p-button">
       <button onClick={resetGame} className='btn btn-success'>Reset Game</button>
-      <h2>Move History</h2>
-      <ol>
-        {history.map((move, index) => (
-          <li key={index}>{move}</li>
-        ))}
-      </ol>
+      </div>
     </div>
   );
 }
