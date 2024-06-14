@@ -3,11 +3,16 @@ import { Chess, Square } from "chess.js";
 import { Chessboard } from "react-chessboard";
 import "./ChessboardPage.css";
 import MoveList from "../components/chess_components/MoveList";
+import GameOverDialog from "../components/chess_components/GameOverDialog";
 import { PromotionPieceOption } from "react-chessboard/dist/chessboard/types";
 
 function ChessboardPage() {
   const [game, setGame] = useState(new Chess());
   const [history, setHistory] = useState<string[]>([]);
+  const [gameOver, setGameOver] = useState<{
+    winner: string | null;
+    reason: string;
+  } | null>(null);
 
   const handlePieceDrop = (
     sourceSquare: string,
@@ -30,6 +35,11 @@ function ChessboardPage() {
 
       setGame(newGame);
       setHistory([...history, move.san]);
+
+      console.log("Current History:", newGame.history())
+      console.log("Current FEN:", newGame.fen())
+
+      checkGameOver(newGame);
       return true; // Legal move, update state
     } catch (error) {
       console.error(
@@ -49,13 +59,48 @@ function ChessboardPage() {
       return false;
     }
 
-    const promotion = piece.toLowerCase()
-    return handlePieceDrop(promoteFromSquare, promoteToSquare, piece, promotion[1]);
+    const promotion = piece.toLowerCase();
+    return handlePieceDrop(
+      promoteFromSquare,
+      promoteToSquare,
+      piece,
+      promotion[1]
+    );
+  };
+
+  const checkGameOver = (game: Chess) => {
+    if (game.isCheckmate()) {
+      setGameOver({
+        winner: game.turn() === "w" ? "Black" : "White",
+        reason: "Checkmate",
+      });
+    } else if (game.isDraw()) {
+      setGameOver({
+        winner: null,
+        reason: "Draw",
+      });
+    } else if (game.isStalemate()) {
+      setGameOver({
+        winner: null,
+        reason: "Stalemate",
+      });
+    } else if (game.isThreefoldRepetition()) {
+      setGameOver({
+        winner: null,
+        reason: "Threefold repetition",
+      });
+    } else if (game.isInsufficientMaterial()) {
+      setGameOver({
+        winner: null,
+        reason: "Insufficient material",
+      });
+    }
   };
 
   const resetGame = () => {
     setGame(new Chess());
     setHistory([]);
+    setGameOver(null);
   };
 
   return (
@@ -73,6 +118,13 @@ function ChessboardPage() {
         <button onClick={resetGame} className="btn btn-success">
           Reset Game
         </button>
+        {gameOver && (
+          <GameOverDialog
+            winner={gameOver.winner}
+            reason={gameOver.reason}
+            onRestart={resetGame}
+          />
+        )}
       </div>
     </div>
   );
