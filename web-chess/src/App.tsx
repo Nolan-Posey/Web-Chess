@@ -1,21 +1,12 @@
 import { useState } from "react";
-import DismissibleAlert from "./components/DismissibleAlert";
-import ShowAlertButton from "./components/ShowAlertButton";
+import { Chessboard } from "react-chessboard";
 
 function App() {
-  const [alertVisible, setAlertVisibility] = useState(false);
 
   return (
     <>
       <div>
-        {alertVisible === true && (
-          <DismissibleAlert
-            onClose={() => setAlertVisibility(false)}
-          ></DismissibleAlert>
-        )}
-        <ShowAlertButton onClick={() => setAlertVisibility(!alertVisible)}>
-          Show Alert
-        </ShowAlertButton>
+        <Chessboard id='BasicBoard' boardWidth={900}/>
       </div>
     </>
   );
