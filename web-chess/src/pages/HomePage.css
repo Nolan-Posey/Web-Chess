@@ -1,0 +1,12 @@
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-items: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+  height: 100vh;
+  gap: 20px; /* Space between buttons */
+}
+
+.grid-button {
+  width: 150px; /* Button width */
+}
