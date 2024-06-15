@@ -26,11 +26,15 @@ const MoveList = ({ moves }: MoveListProps) => {
 
   return (
     <div className="moveListContainer">
-      <h2>Move History</h2>
+      <h2>
+        <u style={{color: "#6f6fa5"}}>
+            <text style={{color: "#6f6fa5", outlineColor: "white", textShadow: "1px 1px 1px #ffffff"}}>Move History</text>
+        </u>
+      </h2>
       <div className="moveList" ref={moveListRef}>
         <ol>
           {formatMoves(moves).map((move, index) => (
-            <li key={index}>{move}</li>
+            <li style={{color: "#ffffff"}} key={index}>{move}</li>
           ))}
         </ol>
       </div>

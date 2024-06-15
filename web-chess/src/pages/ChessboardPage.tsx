@@ -21,8 +21,8 @@ function ChessboardPage() {
     promotion?: string
   ) => {
     try {
-      const newGame = new Chess(game.fen()); // Create a new instance with the current position
-      const move = newGame.move({
+      //const newGame = new Chess(game.fen()); // Create a new instance with the current position
+      const move = game.move({
         from: sourceSquare,
         to: targetSquare,
         promotion: promotion || undefined,
@@ -33,13 +33,9 @@ function ChessboardPage() {
         return false; // Illegal move, do not update state
       }
 
-      setGame(newGame);
+      setGame(game);
       setHistory([...history, move.san]);
-
-      console.log("Current History:", newGame.history())
-      console.log("Current FEN:", newGame.fen())
-
-      checkGameOver(newGame);
+      checkGameOver(game);
       return true; // Legal move, update state
     } catch (error) {
       console.error(
@@ -69,15 +65,11 @@ function ChessboardPage() {
   };
 
   const checkGameOver = (game: Chess) => {
+    console.log(game.isThreefoldRepetition());
     if (game.isCheckmate()) {
       setGameOver({
         winner: game.turn() === "w" ? "Black" : "White",
         reason: "Checkmate",
-      });
-    } else if (game.isDraw()) {
-      setGameOver({
-        winner: null,
-        reason: "Draw",
       });
     } else if (game.isStalemate()) {
       setGameOver({
@@ -93,6 +85,11 @@ function ChessboardPage() {
       setGameOver({
         winner: null,
         reason: "Insufficient material",
+      });
+    } else if (game.isDraw()) {
+      setGameOver({
+        winner: null,
+        reason: "Draw",
       });
     }
   };
@@ -111,10 +108,11 @@ function ChessboardPage() {
           position={game.fen()}
           onPieceDrop={handlePieceDrop}
           onPromotionPieceSelect={handlePromotionPieceSelect}
+          arePremovesAllowed={true}
         ></Chessboard>
         <MoveList moves={history}></MoveList>
       </div>
-      <div className="p-button">
+      <div>
         <button onClick={resetGame} className="btn btn-success">
           Reset Game
         </button>
