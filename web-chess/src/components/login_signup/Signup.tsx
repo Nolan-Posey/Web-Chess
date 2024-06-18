@@ -28,7 +28,7 @@ const Signup = () => {
           alert(error.message);
         }*/
         alert(
-          "Error: Could not log in user. \nPlease check your username and/or password."
+          "Error: Could not create new account."
         );
       }
     }
