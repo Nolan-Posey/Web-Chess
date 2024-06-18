@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Chess, Square } from "chess.js";
 import { Chessboard } from "react-chessboard";
 import "./ChessboardPage.css";
 import MoveList from "../components/chess_components/MoveList";
 import GameOverDialog from "../components/chess_components/GameOverDialog";
 import { PromotionPieceOption } from "react-chessboard/dist/chessboard/types";
+import {io} from "socket.io-client";
+
+const socket = io('http://localhost:5000', {
+  reconnection: true,
+  reconnectionAttempts: Infinity,
+  reconnectionDelay: 1000,
+  reconnectionDelayMax: 5000,
+});
 
 function ChessboardPage() {
   const [game, setGame] = useState(new Chess());
@@ -14,6 +22,43 @@ function ChessboardPage() {
     reason: string;
   } | null>(null);
 
+  useEffect(() => {
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected from server');
+    });
+
+    socket.on('reconnect', (attempt) => {
+      console.log(`Reconnected to server after ${attempt} attempts`);
+    });
+
+    socket.on('reconnect_error', (error) => {
+      console.error('Reconnection error:', error);
+    });
+
+    socket.on('move', (move) => {
+      setGame(prevGame => {
+        const newGame = new Chess(prevGame.fen());
+        newGame.move(move);
+        setHistory([...history, move.san]);
+        checkGameOver(newGame);
+        return newGame;
+      });
+    });
+
+    socket.on('reset', () => {
+      resetGame();
+    });
+
+    return () => {
+      socket.off('move');
+      socket.off('reset');
+    };
+  }, [history]);
+
   const handlePieceDrop = (
     sourceSquare: string,
     targetSquare: string,
@@ -21,7 +66,6 @@ function ChessboardPage() {
     promotion?: string
   ) => {
     try {
-      //const newGame = new Chess(game.fen()); // Create a new instance with the current position
       const move = game.move({
         from: sourceSquare,
         to: targetSquare,
@@ -36,6 +80,7 @@ function ChessboardPage() {
       setGame(game);
       setHistory([...history, move.san]);
       checkGameOver(game);
+      socket.emit('move', move);
       return true; // Legal move, update state
     } catch (error) {
       console.error(
@@ -98,6 +143,7 @@ function ChessboardPage() {
     setGame(new Chess());
     setHistory([]);
     setGameOver(null);
+    socket.emit("reset");
   };
 
   return (
