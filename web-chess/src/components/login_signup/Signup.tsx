@@ -10,7 +10,9 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const handleSignup = async () => {
-    if (password === "" || password.length < 8) {
+    if (email === "") {
+      alert("You must enter an email.");
+    } else if (password === "" || password.length < 8) {
       alert("You must enter a password that's at least 8 characters long.");
     } else if (confirmPassword === "") {
       alert("You must confirm your password.");
@@ -39,7 +41,9 @@ const Signup = () => {
       }}
     >
       <div style={{ textAlign: "center" }}>
-        <h2 style={{color: "#6f6fa5", textShadow: "0.5px 0.5px 0.5px white"}}>Sign-up</h2>
+        <h2 style={{ color: "#6f6fa5", textShadow: "0.5px 0.5px 0.5px white" }}>
+          Sign-up
+        </h2>
         <input
           type="email"
           value={email}
