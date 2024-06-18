@@ -1,5 +1,4 @@
 import "./GameOverDialog.css";
-import React from "react";
 
 interface GameOverProps {
   winner: string | null;
@@ -7,16 +6,28 @@ interface GameOverProps {
   onRestart: () => void;
 }
 
-function GameOverDialog({ winner, reason, onRestart }: GameOverProps) {
+const GameOverDialog = ({ winner, reason, onRestart }: GameOverProps) => {
   return (
     <div className="modal-overlay">
-      <div className="modal-content">
+      <div
+        style={{
+          width: "400px",
+          height: "190px",
+          backgroundColor: "#6f6fa5",
+          textAlign: "center",
+          border: "solid",
+          borderColor: "black",
+          borderWidth: "2px",
+        }}
+      >
         <h2>
           <u>Game Over!</u>
         </h2>
         <p>{reason}</p>
         {winner && <p>Winner: {winner}</p>}
-        <button onClick={onRestart}>Restart Game</button>
+        <button className="btn btn-success" onClick={onRestart}>
+          Restart Game
+        </button>
       </div>
     </div>
   );

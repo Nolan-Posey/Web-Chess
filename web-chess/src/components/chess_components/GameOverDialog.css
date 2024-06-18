@@ -10,12 +10,3 @@
   align-items: center;
   z-index: 1000;
 }
-
-.modal-content {
-  background-color: white;
-  width: 400px;
-  height: 200px;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-}
