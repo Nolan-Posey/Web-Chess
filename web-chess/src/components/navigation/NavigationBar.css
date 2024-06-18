@@ -1,17 +1,44 @@
 .navbar-custom {
-    background-color: rgb(111, 111, 165);
-  }
-  
-  .navbar-custom .navbar-brand {
-    color: white !important; /* Ensure the brand text is always white */
-  }
-  
-  .navbar-custom .nav-link,
-  .navbar-custom .nav-dropdown {
-    color: rgb(141, 139, 139) !important; /* Default text color for links */
-  }
-  
-  .navbar-custom .nav-link:hover,
-  .navbar-custom .nav-dropdown:hover {
-    color: #ffffff !important; /* Hover color for links */
-  }
+  background-color: rgb(111, 111, 165);
+}
+
+.navbar-custom .navbar-brand {
+  color: white !important; /* Ensure the brand text is always white */
+}
+
+.navbar-custom .nav-link,
+.navbar-custom .nav-dropdown {
+  color: rgb(141, 139, 139) !important; /* Default text color for links */
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-dropdown:hover {
+  color: #ffffff !important; /* Hover color for links */
+}
+
+.navbar-right {
+  margin-left: auto;
+  margin-right: 2%;
+}
+
+/* Ensure higher specificity */
+.navbar-custom .navbar-text {
+  color: #ffffff !important; /* Set your desired color */
+  font-size: 24px !important; /* Set your desired font size */
+}
+
+/* Ensure higher specificity */
+.navbar-custom .navbar-link {
+  color: #ffffff !important; /* Set your desired color for links */
+  font-size: 16px !important; /* Set your desired font size for links */
+}
+
+.navbar-custom .navbar-link-red:hover {
+  color: red !important;
+  font-size: 24px;
+}
+
+.navbar-custom .navbar-link-green:hover {
+  color: rgb(0, 170, 0) !important;
+  font-size: 24px;
+}
